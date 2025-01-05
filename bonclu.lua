@@ -715,7 +715,7 @@ local connection
 SKG:OnChanged(function()
     local XXX = SKG.Value
 
-    local function changeStats()
+    local function unlockSkills()
         local Humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
         if Humanoid then
             local HumanoidGear = Humanoid:FindFirstChild("Gear")
@@ -748,7 +748,7 @@ SKG:OnChanged(function()
     end
 
     if XXX then
-        connection = RunService.RenderStepped:Connect(changeStats)
+        connection = RunService.RenderStepped:Connect(unlockSkills)
     else
         if connection and connection.Connected then
             connection:Disconnect()
@@ -794,7 +794,6 @@ SC:OnChanged(function()
                 local Gear = game.Players.LocalPlayer.Character:FindFirstChild("Gear")
                 if Gear then
                     if SSS then
-                        Humanoid.Invinsible.Value = true
                         Humanoid.Sanity.Value = 100
                         HumanoidGear.Upgrades.GasEfficiency.Value = 0.125
                         HumanoidGear.Blades.Value = 8
@@ -803,7 +802,6 @@ SC:OnChanged(function()
                         HumanoidGear.Upgrades.MentalStrength.Value = 0.3
                         HumanoidGear.Upgrades.HooksRange.Value = 160
                     else
-                        Humanoid.Invinsible.Value = false
                         HumanoidGear.Upgrades.GasEfficiency.Value = 0.5
                     end
                 end
@@ -825,8 +823,56 @@ SC:OnChanged(function()
             if HumanoidGear then
                 local Gear = game.Players.LocalPlayer.Character:FindFirstChild("Gear")
                 if Gear then
-                    Humanoid.Invinsible.Value = false
                     HumanoidGear.Upgrades.GasEfficiency.Value = 0.5
+                end
+            end
+        end
+    end
+end)
+
+
+------- Anti Titan Grab -------
+
+
+local ATC = Tabs.Toggles:AddToggle("ATC", {Title = "Anti Titan Grab", Default = false })
+local RunService = game:GetService("RunService")
+local connection
+
+ATC:OnChanged(function()
+    local ATT = ATC.Value
+
+    local function antiGrab()
+        local Humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+        if Humanoid then
+            local HumanoidGear = Humanoid:FindFirstChild("Gear")
+            if HumanoidGear then
+                local Gear = game.Players.LocalPlayer.Character:FindFirstChild("Gear")
+                if Gear then
+                    if ATT then
+                        Humanoid.Invinsible.Value = true
+                    else
+                        Humanoid.Invinsible.Value = false
+                    end
+                end
+            end
+        end
+    end
+
+    if ATT then
+        connection = RunService.RenderStepped:Connect(antiGrab)
+    else
+        if connection and connection.Connected then
+            connection:Disconnect()
+            connection = nil
+        end
+        
+        local Humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+        if Humanoid then
+            local HumanoidGear = Humanoid:FindFirstChild("Gear")
+            if HumanoidGear then
+                local Gear = game.Players.LocalPlayer.Character:FindFirstChild("Gear")
+                if Gear then
+                    Humanoid.Invinsible.Value = false
                 end
             end
         end
