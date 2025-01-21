@@ -797,7 +797,7 @@ SC:OnChanged(function()
                         Humanoid.Sanity.Value = 100
                         HumanoidGear.Upgrades.GasEfficiency.Value = 0.125
                         HumanoidGear.Blades.Value = 8
-                        HumanoidGear.Upgrades.AttackSpeed.Value = 0.2
+                        HumanoidGear.Upgrades.AttackSpeed.Value = 0.4
                         HumanoidGear.Upgrades.RunningSpeed.Value = 19
                         HumanoidGear.Upgrades.MentalStrength.Value = 0.3
                         HumanoidGear.Upgrades.HooksRange.Value = 160
