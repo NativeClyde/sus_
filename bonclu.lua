@@ -838,17 +838,33 @@ local ATC = Tabs.Toggles:AddToggle("ATC", {Title = "Anti Titan Grab", Default = 
 local RunService = game:GetService("RunService")
 local connection
 
+local function INT()
+local player = game.Players.LocalPlayer
+    if not player.Character or not player.Character.PrimaryPart then return false end
+        local playerPosition = player.Character.PrimaryPart.Position
+    
+    for _, titan in pairs(workspace:FindFirstChild("OnGameTitans"):GetChildren()) do
+        if titan:IsA("Model") and titan.PrimaryPart then
+            local distance = (titan.PrimaryPart.Position - playerPosition).Magnitude
+        if distance <= 12 then
+            return true
+        end
+    end
+end
+    return false
+end
+
 ATC:OnChanged(function()
     local ATT = ATC.Value
 
-    local function antiGrab()
-        local Humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+    local function AntiGrab()
+        local Humanoid = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
         if Humanoid then
             local HumanoidGear = Humanoid:FindFirstChild("Gear")
             if HumanoidGear then
                 local Gear = game.Players.LocalPlayer.Character:FindFirstChild("Gear")
                 if Gear then
-                    if ATT then
+                    if ATT and INT() then
                         Humanoid.Invinsible.Value = true
                     else
                         Humanoid.Invinsible.Value = false
@@ -859,14 +875,14 @@ ATC:OnChanged(function()
     end
 
     if ATT then
-        connection = RunService.RenderStepped:Connect(antiGrab)
+        connection = RunService.RenderStepped:Connect(AntiGrab)
     else
         if connection and connection.Connected then
             connection:Disconnect()
             connection = nil
         end
         
-        local Humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+        local Humanoid = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
         if Humanoid then
             local HumanoidGear = Humanoid:FindFirstChild("Gear")
             if HumanoidGear then
@@ -878,6 +894,7 @@ ATC:OnChanged(function()
         end
     end
 end)
+
 
 
 ------- No Cooldown -------
